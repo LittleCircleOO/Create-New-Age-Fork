@@ -1,5 +1,5 @@
 plugins {
-	id "dev.architectury.loom" version "1.1-SNAPSHOT"
+	id "dev.architectury.loom" version "1.7-SNAPSHOT"
 	id "maven-publish"
 }
 
@@ -18,10 +18,12 @@ repositories {
 	maven { url = "https://api.modrinth.com/maven" } // LazyDFU
 	maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
 	maven { url = "https://mvn.devos.one/snapshots/" } // Create, Porting Lib, Forge Tags, Milk Lib, Registrate
+	maven { url = "https://mvn.devos.one/releases/" }
 	maven { url = "https://cursemaven.com" } // Forge Config API Port
 	maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
 	maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
 	maven { url = "https://maven.tterrag.com/" } // Flywheel
+	maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven" } // Forge Config API Port
 	maven {
 		// Location of the maven that hosts Mine and Team Resourceful's files.
 		name = "Resourceful Bees Maven"
@@ -39,11 +41,15 @@ loom {
 
 dependencies {
 	minecraft("com.mojang:minecraft:${minecraft_version}")
-	mappings(loom.layered {
-		it.mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${qm_version}:intermediary-v2")
-		it.parchment("org.parchmentmc.data:parchment-${minecraft_version}:${parchment_version}@zip")
-		it.officialMojangMappings { nameSyntheticMembers = false }
-	})
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${minecraft_version}:${parchment_version}@zip")
+	}
+//	mappings(loom.layered {
+//		it.mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${qm_version}:intermediary-v2")
+//		it.parchment("org.parchmentmc.data:parchment-${minecraft_version}:${parchment_version}@zip")
+//		it.officialMojangMappings { nameSyntheticMembers = false }
+//	})
 
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
